@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import DateTimePicker from "./src/index";
+import DateTimePicker from "../src/index";
 import { View, TouchableOpacity, Text } from "react-native";
 
-class App extends Component {
+class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,7 +29,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state.date);
     return (
       <View
         style={{
@@ -42,7 +41,7 @@ class App extends Component {
           onPress={() => {
             this.bottomSheetRef.current.snapTo(0);
           }}>
-          <Text>Button</Text>
+          <Text>Open date picker</Text>
         </TouchableOpacity>
         <DateTimePicker
           mode="date"
@@ -64,4 +63,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default index;
