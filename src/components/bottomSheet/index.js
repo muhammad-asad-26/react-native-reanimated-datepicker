@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import Animated from "react-native-reanimated";
 import Interactable from "react-native-interactable-reanimated";
@@ -61,7 +62,7 @@ class BottomPanel extends Component {
     }
   };
 
-  onDismissBottomSheetHandler = () => {
+  dismissBottomSheet = () => {
     const { snapPoints } = this.props;
     let index = snapPoints.findIndex((x) => x === 0 || x === "0%");
     if (index !== -1) {
@@ -70,6 +71,10 @@ class BottomPanel extends Component {
   };
 
   snapTo = (index) => {
+    const { snapPoints } = this.props;
+    if (snapPoints.findIndex((x) => x === 0 || x === "0%") !== -1) {
+      Keyboard.dismiss();
+    }
     this.refs.bottomPanel.snapTo({ index });
   };
 
@@ -130,7 +135,7 @@ class BottomPanel extends Component {
           onSnap={this.onDrawerSnap}>
           {!isModal && isDismissWithPress && !isBottomSheetDismissed && (
             <TouchableWithoutFeedback
-              onPress={this.onDismissBottomSheetHandler}
+              onPress={this.dismissBottomSheet}
               disabled={isBackDrop ? false : true}>
               <View
                 style={{

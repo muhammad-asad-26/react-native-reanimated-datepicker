@@ -66,10 +66,18 @@ class index extends Component {
       <BottomSheet
         bottomSheerColor="#FFFFFF"
         ref={forwardRef}
-        initialPosition={iosBottomSheetInitialPosition}
-        snapPoints={iosBottomSheetSnapPoints}
-        isBackDrop={iosBottomSheetBackdrop}
-        isBackDropDismissByPress={iosBottomSheetBackDropDismissByPress}
+        initialPosition={
+          iosBottomSheetInitialPosition ? iosBottomSheetInitialPosition : 0
+        }
+        snapPoints={
+          iosBottomSheetSnapPoints ? iosBottomSheetSnapPoints : ["40%", 0]
+        }
+        isBackDrop={iosBottomSheetBackdrop ? iosBottomSheetBackdrop : true}
+        isBackDropDismissByPress={
+          iosBottomSheetBackDropDismissByPress
+            ? iosBottomSheetBackDropDismissByPress
+            : false
+        }
         isRoundBorderWithTipHeader={false}
         containerStyle={{
           backgroundColor: "#fff",
@@ -108,7 +116,7 @@ class index extends Component {
             display={display ? display : "default"}
             onChange={handleDateChanged}
             date={date}
-            mode={mode ? mode : "datetime"}
+            mode={mode ? mode : "date"}
             minimumDate={minDate && this.getDate(minDate)}
             maximumDate={maxDate && this.getDate(maxDate)}
             minuteInterval={minuteInterval ? minuteInterval : null}
@@ -127,20 +135,19 @@ class index extends Component {
 }
 
 index.propTypes = {
-  mode: PropTypes.string.isRequired,
-  display: PropTypes.string.isRequired,
-  date: PropTypes.object.isRequired,
+  date: PropTypes.object.isRequired || PropTypes.string.isRequired,
   handleDateChanged: PropTypes.func.isRequired,
-  cancelBtnText: PropTypes.string.isRequired,
   handleCancelBtnPress: PropTypes.func.isRequired,
-  confirmBtnText: PropTypes.string.isRequired,
   handleConfirmButtonPress: PropTypes.func.isRequired,
+  mode: PropTypes.string,
+  display: PropTypes.string,
+  cancelBtnText: PropTypes.string,
+  confirmBtnText: PropTypes.string,
   minDate: PropTypes.object,
   maxDate: PropTypes.object,
   minuteInterval: PropTypes.number,
   timeZoneOffsetInMinutes: PropTypes.number,
   is24Hour: PropTypes.bool,
-  iosBottomSheetCustomHeader: PropTypes.string,
   iosBottomSheetContainerStyles: PropTypes.object,
   iosBottomSheetHeaderStyles: PropTypes.object,
   iosBottomSheetContentStyles: PropTypes.object,
@@ -148,6 +155,7 @@ index.propTypes = {
   iosBottomSheetSnapPoints: PropTypes.array,
   iosBottomSheetBackdrop: PropTypes.bool,
   iosBottomSheetBackDropDismissByPress: PropTypes.bool,
+  iosBottomSheetCustomHeader: PropTypes.node,
 };
 
 export default HOC(index);

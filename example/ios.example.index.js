@@ -20,12 +20,12 @@ class index extends Component {
 
   handleCancelButtonPressed = () => {
     console.log("Handle cancel button pressed", this.state.date);
-    this.bottomSheetRef.current.onDismissBottomSheetHandler();
+    this.bottomSheetRef.current.dismissBottomSheet();
   };
 
   handleConfirmButtonPressed = () => {
     console.log("Handle confirm button pressed", this.state.date);
-    this.bottomSheetRef.current.onDismissBottomSheetHandler();
+    this.bottomSheetRef.current.dismissBottomSheet();
   };
 
   render() {
