@@ -134,7 +134,7 @@ You can check [example folder](https://github.com/muhammad-asad-26/react-native-
 | iosBottomSheetHeaderStyles | - | `object` | No | iOS Bottom Sheet main header styles |
 | iosBottomSheetContentStyles | - | `object` | No | iOS Bottom Sheet main content body styles |
 | iosBottomSheetInitialPosition | 0 | `string` | No | iOS Bottom Sheet initial snap point, the bottom sheet will snap to this point after rendering |
-| iosBottomSheetSnapPoints | ["40%", 0] | `Array <string | number>` | No | iOS Bottom Sheet snap points, the bottom sheet will snap onto these snap points |
+| iosBottomSheetSnapPoints | ["40%", 0] | `Array <string / number>` | No | iOS Bottom Sheet snap points, the bottom sheet will snap onto these snap points |
 | iosBottomSheetBackdrop | true | `bool` | No | iOS Bottom Sheet backdrop, which will display bottom sheet like an overlay on the screen |
 | iosBottomSheetBackDropDismissByPress | false | `bool` | No | iOS Bottom Sheet will dismiss if touched out the bottom sheet |
 | iosBottomSheetCustomHeader | - | `React Node` | No | You can render your own custom bottom sheet if you do not want to use the one provided in the bundle |
