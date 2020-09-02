@@ -61,55 +61,74 @@ class index extends Component {
       iosBottomSheetSnapPoints,
       iosBottomSheetBackdrop,
       iosBottomSheetBackDropDismissByPress,
+
+      //android
+
+      androidMode,
     } = this.props;
-    return Platform.OS === "ios" ? (
-      <BottomSheet
-        bottomSheerColor="#FFFFFF"
-        ref={forwardRef}
-        initialPosition={
-          iosBottomSheetInitialPosition ? iosBottomSheetInitialPosition : 0
-        }
-        snapPoints={
-          iosBottomSheetSnapPoints ? iosBottomSheetSnapPoints : ["40%", 0]
-        }
-        isBackDrop={iosBottomSheetBackdrop ? iosBottomSheetBackdrop : true}
-        isBackDropDismissByPress={
-          iosBottomSheetBackDropDismissByPress
-            ? iosBottomSheetBackDropDismissByPress
-            : false
-        }
-        isRoundBorderWithTipHeader={false}
-        containerStyle={{
-          backgroundColor: "#fff",
-          ...iosBottomSheetContainerStyles,
-        }}
-        headerStyle={{ ...iosBottomSheetHeaderStyles }}
-        bodyStyle={{
-          flex: 1,
-          backgroundColor: "rgba(226, 226, 226, 0.7)",
-          ...iosBottomSheetContentStyles,
-        }}
-        header={
-          iosBottomSheetCustomHeader ? (
-            iosBottomSheetCustomHeader
-          ) : (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}>
-              <Button
-                onPress={handleCancelBtnPress}
-                title={cancelBtnText ? cancelBtnText : "Cancel"}
-              />
-              <Button
-                onPress={handleConfirmButtonPress}
-                title={confirmBtnText ? confirmBtnText : "Done"}
-              />
-            </View>
-          )
-        }
-        body={
+
+    console.log(androidMode);
+    if (Platform.OS === "ios") {
+      return (
+        <BottomSheet
+          bottomSheerColor="#FFFFFF"
+          ref={forwardRef}
+          initialPosition={iosBottomSheetInitialPosition}
+          snapPoints={iosBottomSheetSnapPoints}
+          isBackDrop={iosBottomSheetBackdrop}
+          isBackDropDismissByPress={iosBottomSheetBackDropDismissByPress}
+          isRoundBorderWithTipHeader={false}
+          containerStyle={{
+            backgroundColor: "#fff",
+            ...iosBottomSheetContainerStyles,
+          }}
+          headerStyle={{ ...iosBottomSheetHeaderStyles }}
+          bodyStyle={{
+            flex: 1,
+            backgroundColor: "rgba(226, 226, 226, 0.7)",
+            ...iosBottomSheetContentStyles,
+          }}
+          header={
+            iosBottomSheetCustomHeader ? (
+              iosBottomSheetCustomHeader
+            ) : (
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}>
+                <Button
+                  onPress={handleCancelBtnPress}
+                  title={cancelBtnText ? cancelBtnText : "Cancel"}
+                />
+                <Button
+                  onPress={handleConfirmButtonPress}
+                  title={confirmBtnText ? confirmBtnText : "Done"}
+                />
+              </View>
+            )
+          }
+          body={
+            <DateTimePicker
+              value={date}
+              is24Hour={is24Hour === undefined ? false : is24Hour}
+              display={display ? display : "default"}
+              onChange={handleDateChanged}
+              date={date}
+              mode={mode ? mode : "datetime"}
+              minimumDate={minDate && this.getDate(minDate)}
+              maximumDate={maxDate && this.getDate(maxDate)}
+              minuteInterval={minuteInterval ? minuteInterval : null}
+              timeZoneOffsetInMinutes={
+                timeZoneOffsetInMinutes ? timeZoneOffsetInMinutes : null
+              }
+            />
+          }
+        />
+      );
+    } else if (Platform.OS === "android") {
+      if (androidMode === "default") {
+        return (
           <DateTimePicker
             value={date}
             is24Hour={is24Hour === undefined ? false : is24Hour}
@@ -124,15 +143,23 @@ class index extends Component {
               timeZoneOffsetInMinutes ? timeZoneOffsetInMinutes : null
             }
           />
-        }
-      />
-    ) : (
+        );
+      }
+    } else if (Platform.OS === "web") {
       <View>
-        <Text>You can render Android version here</Text>
-      </View>
-    );
+        <Text>Web Date-Picker is in Progress</Text>
+      </View>;
+    } else {
+      <View>
+        <Text>
+          This is will only happens, if Platform.OS adds more OS compatibilites
+        </Text>
+      </View>;
+    }
   }
 }
+
+index.defaultProps = { androidMode: "default" };
 
 index.propTypes = {
   date: PropTypes.object.isRequired || PropTypes.string.isRequired,
@@ -155,7 +182,7 @@ index.propTypes = {
   iosBottomSheetSnapPoints: PropTypes.array,
   iosBottomSheetBackdrop: PropTypes.bool,
   iosBottomSheetBackDropDismissByPress: PropTypes.bool,
-  iosBottomSheetCustomHeader: PropTypes.node,
+  androidMode: PropTypes.string,
 };
 
 export default HOC(index);
