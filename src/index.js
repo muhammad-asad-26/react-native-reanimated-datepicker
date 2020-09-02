@@ -69,7 +69,7 @@ class index extends Component {
 
     console.log(androidMode);
     if (Platform.OS === "ios") {
-      return Platform.OS === "ios" ? (
+      return (
         <BottomSheet
           bottomSheerColor="#FFFFFF"
           ref={forwardRef}
@@ -125,10 +125,6 @@ class index extends Component {
             />
           }
         />
-      ) : (
-        <View>
-          <Text>You can render Android version here</Text>
-        </View>
       );
     } else if (Platform.OS === "android") {
       if (androidMode === "default") {
@@ -189,7 +185,5 @@ index.propTypes = {
   iosBottomSheetBackDropDismissByPress: PropTypes.bool,
   androidMode: PropTypes.string,
 };
-
-
 
 export default HOC(index);
