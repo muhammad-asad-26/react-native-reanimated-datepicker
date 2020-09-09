@@ -1,17 +1,17 @@
-# react-native-datepicker
+# rn-datepicker
 
 React Native DatePicker component for both Android and iOS, using new react native community date & time pickers
 
 ## Install
 
 ```bash
-npm install react-native-datepicker --save
+npm install rn-datepicker --save
 ```
 
 Or
 
 ```bash
-yarn add react-native-datepicker
+yarn add rn-datepicker
 ```
 
 Once the above package is installed, please install these other packages

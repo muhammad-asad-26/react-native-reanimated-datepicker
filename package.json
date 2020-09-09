@@ -1,7 +1,7 @@
 {
-  "name": "datepicker",
+  "name": "react-native-reanimated-datepicker",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -31,5 +31,27 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "keywords": [
+    "datepicker",
+    "react-native",
+    "rn",
+    "react-native-reanimated-datepicker",
+    "react-native-datepicker",
+    "react native datepicker",
+    "rn datepicker",
+    "reanimated",
+    "social",
+    "expo",
+    "mobile",
+    "ios",
+    "android",
+    "web"
+  ],
+  "bugs": {
+    "url": "https://github.com/muhammad-asad-26/react-native-datepicker/issues"
+  },
+  "homepage": "https://github.com/muhammad-asad-26/react-native-datepicker/blob/master/README.md",
+  "author": "Muhammad Asad <asadghafoor26@gmail.com>",
+  "license": "MIT"
 }
