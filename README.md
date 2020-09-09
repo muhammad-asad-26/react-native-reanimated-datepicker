@@ -46,36 +46,56 @@ npm install react-native-interactable-reanimated --save
 
 ```javascript
 import React, { Component } from "react";
-import DatePicker from "react-native-datepicker";
-import { View, TouchableOpacity, Text } from "react-native";
+import DateTimePicker from "../src/index";
+import { View, TouchableOpacity, Text, Platform } from "react-native";
+import moment from "moment";
 
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       date: new Date(),
+      showDatepicker: false,
     };
-    this.bottomSheetRef = React.createRef(); //for iOS only
   }
 
   onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || new Date();
+    if (Platform.OS === "ios") {
+      this.setState({
+        date: moment(selectedDate, "YYYY-MM-DDTHH:mm:ss.sssZ").toDate(),
+      });
+    } else if (Platform.OS === "android") {
+      //Here its a slight different to manage, because this function is called when ok or cancel button is pressed
+      //Check if the selectedDate is undefined.
+      if (selectedDate === undefined) {
+        this.setState({
+          showDatepicker: false,
+        });
+      } else {
+        this.setState({
+          date: moment(selectedDate, "YYYY-MM-DDTHH:mm:ss.sssZ").toDate(),
+          showDatepicker: false,
+        });
+      }
+    }
+  };
+
+  //NOTE: For iOS Only
+  handleCancelButtonPressed = () => {
     this.setState({
-      date: currentDate,
+      showDatepicker: false,
     });
   };
 
-  handleCancelButtonPressed = () => {
-    console.log("Handle cancel button pressed", this.state.date);
-    this.bottomSheetRef.current.dismissBottomSheet(); //for iOS only
-  };
-
+  //NOTE: For iOS Only
   handleConfirmButtonPressed = () => {
-    console.log("Handle confirm button pressed", this.state.date);
-    this.bottomSheetRef.current.dismissBottomSheet(); //for iOS only
+    this.setState({
+      showDatepicker: false,
+    });
   };
 
   render() {
+    const { date, showDatepicker } = this.state;
     return (
       <View
         style={{
@@ -86,31 +106,40 @@ class index extends Component {
         }}>
         <TouchableOpacity
           onPress={() => {
-            this.bottomSheetRef.current.snapTo(0);
+            this.setState({
+              showDatepicker: true,
+            });
           }}>
-          <Text>Open date picker</Text>
+          <>
+            <Text style={{ textAlign: "center" }}>Open date picker</Text>
+            <Text style={{ textAlign: "center" }}>
+              Selected Date: {date.toDateString()}
+            </Text>
+          </>
         </TouchableOpacity>
-        <DateTimePicker
-          mode="date"
-          display="default"
-          handleDateChanged={this.onChange}
-          date={this.state.date}
-          cancelBtnText="Cancel"
-          handleCancelBtnPress={this.handleCancelButtonPressed}
-          confirmBtnText="Done"
-          handleConfirmButtonPress={this.handleConfirmButtonPressed}
-          ref={this.bottomSheetRef} //for iOS only
-          iosBottomSheetInitialPosition="40%" //for iOS only
-          iosBottomSheetSnapPoints={["40%", 0]} //for iOS only
-          iosBottomSheetBackdrop={true} //for iOS only
-          iosBottomSheetBackDropDismissByPress={false} //for iOS only
-        />
+        {showDatepicker && (
+          <DateTimePicker
+            mode="date"
+            display="default"
+            handleDateChanged={this.onChange}
+            date={this.state.date}
+            cancelBtnText="Cancel"
+            handleCancelBtnPress={this.handleCancelButtonPressed}
+            confirmBtnText="Done"
+            handleConfirmButtonPress={this.handleConfirmButtonPressed}
+            iosBottomSheetInitialPosition="40%"
+            iosBottomSheetSnapPoints={["40%"]}
+            iosBottomSheetBackdrop={true}
+            iosBottomSheetBackDropDismissByPress={false}
+          />
+        )}
       </View>
     );
   }
 }
 
 export default index;
+
 ```
 
 You can check [example folder](https://github.com/muhammad-asad-26/react-native-datepicker/tree/master/example/) for more details.
@@ -120,26 +149,24 @@ You can check [example folder](https://github.com/muhammad-asad-26/react-native-
 | Prop | Default | Type | Required | Description |
 | :- | :-: | :-: | :-: | :- |
 | **date** | - | <code>string &#124; date | Yes | Specify the display date of DatePicker. `string` type value must match the specified `YYYY-MM-DDTHH:mm:ss.SSSZ` ISO 8601 format |
-| **ref (iOS only)*** | - | `React Ref` | Yes | Create a `React.createRef()` and pass it in the ref of the datepicker for iOS bottom Sheet |
+| **ref (iOS only)** | - | `React Ref` | Yes | Create a `React.createRef()` and pass it in the ref of the datepicker for iOS bottom Sheet |
 | mode | 'date' | `enum` | No | The `enum` of `date`, `datetime` and `time` |
 | display | 'default' | `enum` | No | The `enum` of `default`, `calendar`, `clock` and `spinner` (For Android) <br /><br /> The `enum` of `default`, `spinner`, `compact (iOS 14 only)` and `inline (iOS 14 only)` (For iOS) |
 | confirmBtnText | 'Done' | `string` | No | Specify the text of confirm btn in ios. |
 | cancelBtnText | 'Cancel' | `string` | No | Specify the text of cancel btn in ios. |
-| minDate | - | <code>string &#124; date</code> | No | Restricts the range of possible date values. `string` type value must match the specified `YYYY-MM-DDTHH:mm:ss.SSSZ` ISO 8601 format |
-| maxDate | -  | <code>string &#124; date</code> | No | Restricts the range of possible date values. `string` type value must match the specified `YYYY-MM-DDTHH:mm:ss.SSSZ` ISO 8601 format |
+| minDate | - | <code>date</code> | No | Should be a date object |
+| maxDate | -  | <code>date</code> | No | Should be a date object |
 | minuteInterval | 0 | `number` | No | Specify the minutes interval (iOS only). |
 | timeZoneOffsetInMinutes | 0 | `number` | No | Allows changing of the timeZone of the date picker. By default it uses the device's time zone. (iOS Only) 
 | is24Hour | - | `boolean` | No | Set the TimePicker is24Hour flag. The default value depend on `format`. Only work in Android
-| iosBottomSheetContainerStyles | - | `object` | No | iOS Bottom Sheet container styles
-| iosBottomSheetHeaderStyles | - | `object` | No | iOS Bottom Sheet main header styles |
-| iosBottomSheetContentStyles | - | `object` | No | iOS Bottom Sheet main content body styles |
-| iosBottomSheetInitialPosition | 0 | `string` | No | iOS Bottom Sheet initial snap point, the bottom sheet will snap to this point after rendering |
-| iosBottomSheetSnapPoints | ["40%", 0] | `Array <string / number>` | No | iOS Bottom Sheet snap points, the bottom sheet will snap onto these snap points |
-| iosBottomSheetBackdrop | true | `bool` | No | iOS Bottom Sheet backdrop, which will display bottom sheet like an overlay on the screen |
-| iosBottomSheetBackDropDismissByPress | false | `bool` | No | iOS Bottom Sheet will dismiss if touched out the bottom sheet |
-| iosBottomSheetCustomHeader | - | `React Node` | No | You can render your own custom bottom sheet if you do not want to use the one provided in the bundle |
-
-***NOTE: The datepicker will not work without passing the ref in iOS**
+| **iosBottomSheetContainerStyles (iOS only)** | - | `object` | No | iOS Bottom Sheet container styles
+| **iosBottomSheetHeaderStyles (iOS only)** | - | `object` | No | iOS Bottom Sheet main header styles |
+| **iosBottomSheetContentStyles (iOS only)** | - | `object` | No | iOS Bottom Sheet main content body styles |
+| **iosBottomSheetInitialPosition (iOS only)** | 40% | `string` | No | iOS Bottom Sheet initial snap point, the bottom sheet will snap to this point after rendering |
+| **iosBottomSheetSnapPoints (iOS only)** | ["40%"] | `Array <string | number>` | No | iOS Bottom Sheet snap points, the bottom sheet will snap onto these snap points |
+| **iosBottomSheetBackdrop (iOS only)** | true | `bool` | No | iOS Bottom Sheet backdrop, which will display bottom sheet like an overlay on the screen |
+| **iosBottomSheetBackDropDismissByPress (iOS only)** | false | `bool` | No | iOS Bottom Sheet will dismiss if touched out the bottom sheet |
+| **iosBottomSheetCustomHeader (iOS only)** | - | `React Node` | No | You can render your own custom bottom sheet if you do not want to use the one provided in the bundle |
 
 
 ## Events
@@ -150,7 +177,7 @@ You can check [example folder](https://github.com/muhammad-asad-26/react-native-
 | handleConfirmButtonPress | Yes | You can perform any action on the confirm/done button is pressed, this callback will be fired by the bottom sheet. (If default header is used pass this prop) |
 
 ### Bottom Sheet Methods (iOS Only)
-The methods that ref above passed ref will have
+These methods will only be provided if Ref is set for the datepicker
 
 | Method | Params | Description |
 | :- | :-: | :- |

@@ -62,6 +62,8 @@ class index extends Component {
       iosBottomSheetBackdrop,
       iosBottomSheetBackDropDismissByPress,
     } = this.props;
+    let minDateValue = minDate && this.getDate(minDate);
+    let maxDateValue = maxDate && this.getDate(maxDate);
     if (Platform.OS === "ios") {
       return (
         <BottomSheet
@@ -110,8 +112,8 @@ class index extends Component {
               onChange={handleDateChanged}
               date={date}
               mode={mode ? mode : "datetime"}
-              minimumDate={minDate && this.getDate(minDate)}
-              maximumDate={maxDate && this.getDate(maxDate)}
+              minimumDate={minDateValue}
+              maximumDate={maxDateValue}
               minuteInterval={minuteInterval ? minuteInterval : null}
               timeZoneOffsetInMinutes={
                 timeZoneOffsetInMinutes ? timeZoneOffsetInMinutes : null
@@ -129,8 +131,8 @@ class index extends Component {
           onChange={handleDateChanged}
           date={date}
           mode={mode ? mode : "date"}
-          minimumDate={minDate && this.getDate(minDate)}
-          maximumDate={maxDate && this.getDate(maxDate)}
+          minimumDate={minDateValue}
+          maximumDate={maxDateValue}
           minuteInterval={minuteInterval ? minuteInterval : null}
           timeZoneOffsetInMinutes={
             timeZoneOffsetInMinutes ? timeZoneOffsetInMinutes : null
@@ -159,8 +161,10 @@ index.defaultProps = { androidMode: "default" };
 index.propTypes = {
   date: PropTypes.object.isRequired || PropTypes.string.isRequired,
   handleDateChanged: PropTypes.func.isRequired,
-  handleCancelBtnPress: PropTypes.func.isRequired,
-  handleConfirmButtonPress: PropTypes.func.isRequired,
+  handleCancelBtnPress:
+    Platform.OS === "ios" ? PropTypes.func.isRequired : PropTypes.func,
+  handleConfirmButtonPress:
+    Platform.OS === "ios" ? PropTypes.func.isRequired : PropTypes.func,
   mode: PropTypes.string,
   display: PropTypes.string,
   cancelBtnText: PropTypes.string,
@@ -173,11 +177,13 @@ index.propTypes = {
   iosBottomSheetContainerStyles: PropTypes.object,
   iosBottomSheetHeaderStyles: PropTypes.object,
   iosBottomSheetContentStyles: PropTypes.object,
-  iosBottomSheetInitialPosition: PropTypes.string,
-  iosBottomSheetSnapPoints: PropTypes.array,
-  iosBottomSheetBackdrop: PropTypes.bool,
+  iosBottomSheetInitialPosition:
+    Platform.OS === "ios" ? PropTypes.string.isRequired : PropTypes.string,
+  iosBottomSheetSnapPoints:
+    Platform.OS === "ios" ? PropTypes.array.isRequired : PropTypes.array,
+  iosBottomSheetBackdrop:
+    Platform.OS === "ios" ? PropTypes.bool.isRequired : PropTypes.bool,
   iosBottomSheetBackDropDismissByPress: PropTypes.bool,
-  androidMode: PropTypes.string,
 };
 
 export default HOC(index);
