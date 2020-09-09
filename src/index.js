@@ -61,13 +61,7 @@ class index extends Component {
       iosBottomSheetSnapPoints,
       iosBottomSheetBackdrop,
       iosBottomSheetBackDropDismissByPress,
-
-      //android
-
-      androidMode,
     } = this.props;
-
-    console.log(androidMode);
     if (Platform.OS === "ios") {
       return (
         <BottomSheet
@@ -127,27 +121,28 @@ class index extends Component {
         />
       );
     } else if (Platform.OS === "android") {
-      if (androidMode === "default") {
-        return (
-          <DateTimePicker
-            value={date}
-            is24Hour={is24Hour === undefined ? false : is24Hour}
-            display={display ? display : "default"}
-            onChange={handleDateChanged}
-            date={date}
-            mode={mode ? mode : "date"}
-            minimumDate={minDate && this.getDate(minDate)}
-            maximumDate={maxDate && this.getDate(maxDate)}
-            minuteInterval={minuteInterval ? minuteInterval : null}
-            timeZoneOffsetInMinutes={
-              timeZoneOffsetInMinutes ? timeZoneOffsetInMinutes : null
-            }
-          />
-        );
-      }
+      return (
+        <DateTimePicker
+          value={date}
+          is24Hour={is24Hour === undefined ? false : is24Hour}
+          display={display ? display : "default"}
+          onChange={handleDateChanged}
+          date={date}
+          mode={mode ? mode : "date"}
+          minimumDate={minDate && this.getDate(minDate)}
+          maximumDate={maxDate && this.getDate(maxDate)}
+          minuteInterval={minuteInterval ? minuteInterval : null}
+          timeZoneOffsetInMinutes={
+            timeZoneOffsetInMinutes ? timeZoneOffsetInMinutes : null
+          }
+        />
+      );
     } else if (Platform.OS === "web") {
       <View>
-        <Text>Web Date-Picker is in Progress</Text>
+        <Text>
+          Web Date-Picker is not implemented, Feel free to contribute in this
+          package
+        </Text>
       </View>;
     } else {
       <View>

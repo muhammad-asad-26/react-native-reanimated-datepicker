@@ -3,8 +3,8 @@
  */
 
 import { AppRegistry } from "react-native";
-import ExampleiOS from "./example/ios.example.index";
-import ExampleAndroid from "./example/ios.example.index";
+//import IOSExample from "./example/ios.example.index"; Heptic Feedback purely native feel datepicker, with bottom sheet bounce effects
+import Example from "./example/example.index";
 import { name as appName } from "./app.json";
 
-AppRegistry.registerComponent(appName, () => ExampleAndroid);
+AppRegistry.registerComponent(appName, () => Example);
