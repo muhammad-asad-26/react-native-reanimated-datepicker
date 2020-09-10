@@ -142,7 +142,7 @@ export default index;
 
 ```
 
-You can check [example folder](https://github.com/muhammad-asad-26/react-native-datepicker/tree/master/example/) for more details.
+You can check [example folder](https://github.com/muhammad-asad-26/react-native-reanimated-datepicker/tree/master/example/) for more details.
 
 ## Properties
 

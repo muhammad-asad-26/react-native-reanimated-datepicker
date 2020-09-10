@@ -49,9 +49,9 @@
     "web"
   ],
   "bugs": {
-    "url": "https://github.com/muhammad-asad-26/react-native-datepicker/issues"
+    "url": "https://github.com/muhammad-asad-26/react-native-reanimated-datepicker/issues"
   },
-  "homepage": "https://github.com/muhammad-asad-26/react-native-datepicker/blob/master/README.md",
+  "homepage": "https://github.com/muhammad-asad-26/react-native-reanimated-datepicker/blob/master/README.md",
   "author": "Muhammad Asad <asadghafoor26@gmail.com>",
   "license": "MIT"
 }
